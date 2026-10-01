@@ -1,0 +1,32 @@
+cff-version: 1.2.0
+message: "If you use this work, please cite the preprint below."
+title: "The square of the nine-cycle is not a unit distance graph on the 3-sphere: a negative answer to a question of Frankl, Kupavskii and Swanepoel"
+type: software
+authors:
+  - family-names: Mishra
+    given-names: Ansh
+  - family-names: Senthilkumar
+    given-names: Aryan
+version: "1.0"
+date-released: "2026-10-01"
+license: MIT
+repository-code: "https://github.com/anshM123/FKS-Problem1"
+keywords:
+  - "spherical dimension"
+  - "unit distance graphs"
+  - "orthogonal representations"
+  - "Formal Conjectures"
+  - "Lean 4"
+  - "formal verification"
+preferred-citation:
+  type: article
+  status: preprint
+  title: "The square of the nine-cycle is not a unit distance graph on the 3-sphere: a negative answer to a question of Frankl, Kupavskii and Swanepoel"
+  authors:
+    - family-names: Mishra
+      given-names: Ansh
+    - family-names: Senthilkumar
+      given-names: Aryan
+  year: 2026
+  month: 10
+  url: "https://github.com/anshM123/FKS-Problem1"

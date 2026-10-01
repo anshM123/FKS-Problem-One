@@ -1,0 +1,26 @@
+== formal-conjectures commit: ab0addc45f699bdd0b7cc58efa5140a72f101a9e
+== statement file git blob: b70e39b9b369dd7e9eaf9d22a3f34a41f4d609de  (pull request 6681: b70e39b9...)
+== 1. Core.lean (Mathlib only)
+'FKSCore.problem_1_false' depends on axioms: [propext, Classical.choice, Quot.sound]
+'FKSCore.problem_1_dim4_false' depends on axioms: [propext, Classical.choice, Quot.sound]
+== 2. EmbeddingGraphs.lean (unmodified statement file, repository options)
+== 3. Solution.lean (imports the statement file and Core)
+'Arxiv.«1802.03092».problem_1_solved' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Arxiv.«1802.03092».problem_1.variants.dimension_four_solved' depends on axioms: [propext, Classical.choice, Quot.sound]
+== 4. CheckAnswer.lean (answer(False) = False; definitions agree; statements printed)
+problem_1 : True ↔
+  ∀ (d : ℕ),
+    3 < d → ∀ (n : ℕ) (G : SimpleGraph (Fin n)), G.maxDegree ≤ d → ¬HasCompleteComponent d G → HasSphericalDimAtMost d G
+problem_1_solved : False ↔
+  ∀ (d : ℕ),
+    3 < d → ∀ (n : ℕ) (G : SimpleGraph (Fin n)), G.maxDegree ≤ d → ¬HasCompleteComponent d G → HasSphericalDimAtMost d G
+problem_1.variants.dimension_four : True ↔
+  ∀ (n : ℕ) (G : SimpleGraph (Fin n)), G.maxDegree ≤ 4 → ¬HasCompleteComponent 4 G → HasSphericalDimAtMost 4 G
+problem_1.variants.dimension_four_solved : False ↔
+  ∀ (n : ℕ) (G : SimpleGraph (Fin n)), G.maxDegree ≤ 4 → ¬HasCompleteComponent 4 G → HasSphericalDimAtMost 4 G
+'Arxiv.«1802.03092».problem_1_solved' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Arxiv.«1802.03092».problem_1.variants.dimension_four_solved' depends on axioms: [propext, Classical.choice, Quot.sound]
+== 5. forbidden keywords (sorry/admit/native_decide/axiom) outside the statement file:
+none
+== done
+== exit 0, 125 s

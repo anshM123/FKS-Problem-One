@@ -1,0 +1,8 @@
+C_9^2 in R^4: 200 random starts
+  representations found (residual < 1e-10): 200
+  with a residue class on one line (sine < 1e-6): 200
+  number of such classes per representation (0/1/2/3): 0/200/0/0
+  largest smallest-distance between two of the nine vectors: 2.95e-08
+control C_8^2 in R^4: 50 random starts
+  largest smallest-distance between two of the eight vectors: 1.414
+exit 0

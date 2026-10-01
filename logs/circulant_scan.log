@@ -1,0 +1,7 @@
+  d=4: no injective representation found for C_9(1, 2) (best min distance 2.93e-08)
+  d=4: no injective representation found for C_9(1, 4) (best min distance 5.01e-08)
+  d=4: no injective representation found for C_9(2, 4) (best min distance 9.67e-08)
+d=4: 151 connected circulants with n <= 18 tested, 3 without an injective representation
+d=5: 78 connected circulants with n <= 18 tested, 0 without an injective representation
+d=6: 245 connected circulants with n <= 18 tested, 0 without an injective representation
+exit 0

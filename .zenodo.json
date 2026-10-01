@@ -1,0 +1,26 @@
+{
+  "title": "The square of the nine-cycle is not a unit distance graph on the 3-sphere: a negative answer to a question of Frankl, Kupavskii and Swanepoel",
+  "upload_type": "publication",
+  "publication_type": "preprint",
+  "description": "The spherical dimension of a graph G is the least k such that the vertices of G can be placed at distinct points of the sphere of radius 1/sqrt(2) centred at the origin of R^k with every edge of length 1. Frankl, Kupavskii and Swanepoel (J. Combin. Theory Ser. A 171 (2020), Problem 1) asked whether for d > 3 every graph of maximum degree d, except K_{d+1}, has spherical dimension at most d. We show that the answer is negative for d = 4: the square of the nine-cycle is connected and 4-regular, and its spherical dimension is 5. Equivalently, every orthogonal representation of C_9^2 by unit vectors in R^4 maps two vertices to the same vector. The proof is elementary, and it is formalized in Lean 4 with Mathlib against the statements problem_1 and problem_1.variants.dimension_four of Google DeepMind's Formal Conjectures repository. Every graph on at most 8 vertices satisfies the conclusion, so C_9^2 is a counterexample of the smallest possible order. The repository contains the paper (LaTeX source and PDF), the Lean files, a check script, numerical checks and logs.",
+  "creators": [
+    {
+      "name": "Mishra, Ansh"
+    },
+    {
+      "name": "Senthilkumar, Aryan"
+    }
+  ],
+  "license": "mit",
+  "access_right": "open",
+  "keywords": [
+    "spherical dimension",
+    "unit distance graphs",
+    "orthogonal representations",
+    "Formal Conjectures",
+    "Lean 4",
+    "formal verification"
+  ],
+  "version": "1.0",
+  "language": "eng"
+}

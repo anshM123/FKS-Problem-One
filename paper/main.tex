@@ -1,0 +1,232 @@
+\documentclass[11pt]{amsart}
+\usepackage[margin=1.1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage[colorlinks=true,linkcolor=blue,citecolor=blue,urlcolor=blue]{hyperref}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{problem}{Problem}
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\ip}[2]{\langle #1,#2\rangle}
+\newcommand{\lean}[1]{\texttt{#1}}
+\setlength{\emergencystretch}{3em}
+
+\begin{document}
+
+\title[The square of the nine-cycle on the 3-sphere]{The square of the nine-cycle is not a unit distance graph on the $3$-sphere: a negative answer to a question of Frankl, Kupavskii and Swanepoel}
+
+\author{Ansh Mishra}
+\author{Aryan Senthilkumar}
+
+\date{October 2026}
+
+\begin{abstract}
+The spherical dimension of a graph $G$ is the least $k$ such that the vertices of $G$ can be placed at distinct points of the sphere of radius $1/\sqrt2$ centred at the origin of $\R^k$ with every edge of length $1$.
+Frankl, Kupavskii and Swanepoel asked whether for $d>3$ every graph of maximum degree $d$, except $K_{d+1}$, has spherical dimension at most $d$.
+We show that the answer is negative for $d=4$: the square of the nine-cycle, $C_9^2$, is connected and $4$-regular, and its spherical dimension is $5$.
+Equivalently, every orthogonal representation of $C_9^2$ by unit vectors in $\R^4$ maps two vertices to the same vector.
+The proof is elementary.
+It is formalized in Lean~4 with Mathlib, against the statement of the problem in Google DeepMind's Formal Conjectures repository.
+By a matching argument every graph on at most $8$ vertices satisfies the conclusion, so $C_9^2$ is a counterexample of the smallest possible order.
+\end{abstract}
+
+\maketitle
+
+\section{Introduction}
+
+A graph $G=(V,E)$ is a \emph{unit distance graph} in $\R^d$ if $V\subset\R^d$ and every edge joins two points at distance $1$; other pairs may also be at distance $1$.
+Following Frankl, Kupavskii and Swanepoel \cite{FKS}, the \emph{spherical dimension} $\dim_S G$ is the least $k$ such that $G$ is isomorphic to a unit distance graph whose vertices lie on the sphere $S^{k-1}\subset\R^k$ of radius $1/\sqrt2$ centred at the origin.
+For points $f(u),f(v)$ of this sphere,
+\[
+|f(u)-f(v)|^2=|f(u)|^2+|f(v)|^2-2\ip{f(u)}{f(v)}=1-2\ip{f(u)}{f(v)},
+\]
+so an edge has length $1$ exactly when its endpoints are orthogonal.
+After scaling by $\sqrt2$, $\dim_S G\le k$ means that $G$ has an \emph{injective orthogonal representation} by unit vectors in $\R^k$: distinct unit vectors $x_v$, $v\in V$, with $\ip{x_u}{x_v}=0$ for every edge $uv$.
+
+Frankl, Kupavskii and Swanepoel proved that every graph of maximum degree $d-1$ has spherical dimension at most $d$ \cite[Proposition~2]{FKS}, and that every graph of maximum degree $d$ is a unit distance graph in $\R^d$, except when $d=3$ and $G$ contains $K_{3,3}$ \cite[Theorem~1]{FKS}.
+They asked for the spherical analogue.
+
+\begin{problem}[{\cite[Problem~1]{FKS}}]\label{prob}
+Is it true that for $d>3$ any graph with maximum degree $d$, except $K_{d+1}$, has spherical dimension at most $d$?
+\end{problem}
+
+The complete graph $K_{d+1}$ has to be excluded, since $d+1$ pairwise orthogonal unit vectors do not fit in $\R^d$, and so has every graph with a component $K_{d+1}$.
+For $d=3$ the answer is negative, for example for the cube \cite{FKS}.
+The authors wrote that they suspect the statement to be true for $d>3$; the question is repeated in \cite[Problem~3.15]{Frankl}.
+It is stated formally, with the exception read componentwise, as \lean{problem\_1} and \lean{problem\_1.variants.dimension\_four} in Google DeepMind's Formal Conjectures repository \cite{FC}.
+
+Let $C_9^2$ be the square of the nine-cycle: its vertex set is $\Z_9$, and $i\sim j$ if and only if $j-i\in\{\pm1,\pm2\}$.
+It is connected and $4$-regular, and it is not $K_5$.
+
+\begin{theorem}\label{thm:main}
+Let $x_0,\dots,x_8$ be unit vectors in $\R^4$ such that $\ip{x_i}{x_j}=0$ whenever $j-i\equiv\pm1,\pm2\pmod 9$.
+Then for some $r\in\{0,1,2\}$ the vectors $x_r,x_{r+3},x_{r+6}$ are pairwise parallel.
+In particular $x_i=x_j$ for some $i\ne j$.
+\end{theorem}
+
+The last sentence follows from the first: three unit vectors on one line through the origin take at most the two values $\pm v$.
+
+\begin{corollary}\label{cor}
+$\dim_S C_9^2=5$.
+Hence the answer to Problem~\ref{prob} is negative for $d=4$.
+\end{corollary}
+
+\begin{proof}
+By Theorem~\ref{thm:main}, $C_9^2$ has no injective orthogonal representation by unit vectors in $\R^4$, so $\dim_S C_9^2\ge5$.
+Since its maximum degree is $4=5-1$, \cite[Proposition~2]{FKS} gives $\dim_S C_9^2\le 5$.
+\end{proof}
+
+The graph was found by a numerical search over $4$-regular graphs: minimizing $\sum_{ij\in E}\ip{x_i}{x_j}^2+\sum_i(|x_i|^2-1)^2$ with a repulsion between the vectors always produced exact representations of $C_9^2$ in which two vectors coincide.
+In Section~\ref{sec:remarks} we show that no graph on at most $8$ vertices is a counterexample, and we comment on $d\ge5$.
+
+\section{Proof of Theorem~\ref{thm:main}}
+
+Indices are taken modulo $9$.
+The classes $\{r,r+3,r+6\}$ are independent sets, and every vertex is adjacent to two vertices of each of the other two classes.
+We use three facts.
+\begin{itemize}
+\item[(F1)] For every $i$, the vectors $x_{i+1},x_{i+2}$ are orthonormal and orthogonal to $x_i$ and to $x_{i+3}$, because the differences $1,2,2,1$ are edges.
+\item[(F2)] Hence, if $x_i$ and $x_{i+3}$ are linearly independent, then $x_{i+1},x_{i+2}$ is an orthonormal basis of the plane $\operatorname{span}(x_i,x_{i+3})^{\perp}$.
+\item[(F3)] The rotation $i\mapsto i+3$ preserves adjacency.
+\end{itemize}
+
+\subsection*{Case 1: two of $x_0,x_3,x_6$ are parallel}
+By (F3) we may assume that $x_3=\pm x_0$.
+If $x_3=x_0$ we are done, so let $x_3=-x_0$.
+If $x_6=\pm x_0$ then $x_6\in\{x_0,x_3\}$, and again two of the $x_i$ coincide.
+So assume that $x_0,x_6$ span a plane $D$.
+
+The vectors $x_4,x_5$ are orthonormal and orthogonal to $x_3=-x_0$ and to $x_6$, so they form an orthonormal basis of $D^\perp$.
+The vectors $x_7,x_8$ are orthogonal to $x_6$ and to $x_0$ (the differences $1,2,2,1$ are edges), so they lie in $D^\perp$ too.
+Since $x_7\perp x_5$, we get $x_7=\pm x_4$; then $x_8\perp x_7$ gives $x_8=\pm x_5$.
+
+Decompose $x_1$ and $x_2$ along $\R^4=D^\perp\oplus D$.
+As $x_1\perp x_8=\pm x_5$ and $x_2\perp x_4$, we can write
+\[
+x_1=a\,x_4+d_1,\qquad x_2=b\,x_5+d_2,\qquad a,b\in\R,\ d_1,d_2\in D.
+\]
+The vectors $x_1,x_2,x_4,x_5$ are orthogonal to $x_0$, hence so are $d_1$ and $d_2$.
+So $d_1$ and $d_2$ lie on the line $D\cap x_0^\perp$.
+Since $D\perp D^\perp$ and $x_4\perp x_5$,
+\[
+0=\ip{x_1}{x_2}=ab\,\ip{x_4}{x_5}+\ip{d_1}{d_2}=\ip{d_1}{d_2},
+\]
+and two vectors on a line with inner product $0$ cannot both be nonzero.
+If $d_1=0$, then $x_1=\pm x_4$ and $x_7=\pm x_4$, so $x_1,x_4,x_7$ are parallel.
+If $d_2=0$, then $x_2=\pm x_5$ and $x_8=\pm x_5$, so $x_2,x_5,x_8$ are parallel.
+
+\subsection*{Case 2: no two of $x_0,x_3,x_6$ are parallel}
+Choose $u\ne0$ orthogonal to $x_0,x_3,x_6$, and put $m=|u|^2>0$.
+By (F2), applied to the pairs $(x_0,x_3)$, $(x_3,x_6)$ and $(x_6,x_9)=(x_6,x_0)$,
+\[
+u=p_1x_1+p_2x_2=p_4x_4+p_5x_5=p_7x_7+p_8x_8,
+\qquad p_k^2+p_{k+1}^2=m\quad(k=1,4,7).
+\]
+For $k\in\{1,4,7\}$ let $w_k=p_{k+1}x_k-p_kx_{k+1}$.
+Then $\ip{w_k}{u}=0$, $|w_k|^2=m$, and
+\[
+m\,x_k=p_k\,u+p_{k+1}\,w_k,\qquad m\,x_{k+1}=p_{k+1}\,u-p_k\,w_k .
+\]
+Put $g_{kl}=\ip{w_k}{w_l}$; by the Cauchy--Schwarz inequality $|g_{kl}|\le m$.
+The pairs $\{2,4\}$, $\{5,7\}$ and $\{8,1\}$ are edges.
+Expanding $m^2\ip{x_2}{x_4}=0$, $m^2\ip{x_5}{x_7}=0$ and $m^2\ip{x_8}{x_1}=0$, and using $\ip{u}{w_k}=0$, we obtain
+\begin{equation}\label{eq:three}
+m\,p_2p_4=g_{14}\,p_1p_5,\qquad m\,p_5p_7=g_{47}\,p_4p_8,\qquad m\,p_8p_1=g_{71}\,p_7p_2 .
+\end{equation}
+Multiplying the three equations gives
+\[
+\bigl(m^3-g_{14}g_{47}g_{71}\bigr)\,p_1p_2p_4p_5p_7p_8=0 .
+\]
+
+\emph{Case 2a: $p_1p_2p_4p_5p_7p_8\ne0$.}
+Then $g_{14}g_{47}g_{71}=m^3$, so $|g_{14}|=|g_{47}|=|g_{71}|=m$.
+Equality in the Cauchy--Schwarz inequality gives $w_4=\varepsilon w_1$ and $w_7=\eta w_1$ with $\varepsilon,\eta\in\{\pm1\}$, so $g_{14}=\varepsilon m$ and $g_{71}=\eta m$.
+Now $x_1,x_4,x_7$ lie in the plane spanned by the orthogonal vectors $u$ and $w_1$, with coordinates proportional to $(p_1,p_2)$, $(p_4,\varepsilon p_5)$ and $(p_7,\eta p_8)$.
+The first and third equations of \eqref{eq:three} read $p_2p_4=\varepsilon p_1p_5$ and $p_1p_8=\eta p_2p_7$, so both determinants
+\[
+p_1\cdot\varepsilon p_5-p_2p_4\quad\text{and}\quad p_1\cdot\eta p_8-p_2p_7
+\]
+vanish.
+Hence $x_4$ and $x_7$ are parallel to $x_1$.
+
+\emph{Case 2b: one of $p_1,p_2,p_4,p_5,p_7,p_8$ is $0$.}
+The system \eqref{eq:three} is invariant under the shift of indices by $3$ (with $g_{14}\to g_{47}\to g_{71}$), so we may assume that $p_1=0$ or $p_2=0$.
+If $p_1=0$, then $p_2\ne0$, the first equation gives $p_4=0$, so $p_5\ne0$, and the second gives $p_7=0$.
+Then $u=p_2x_2=p_5x_5=p_8x_8$, and $x_2,x_5,x_8$ are parallel to $u$.
+If $p_2=0$, then $p_1\ne0$, the third equation gives $p_8=0$, so $p_7\ne0$, and the second gives $p_5=0$.
+Then $u=p_1x_1=p_4x_4=p_7x_7$, and $x_1,x_4,x_7$ are parallel to $u$.
+
+In every case one class consists of three parallel unit vectors. \qed
+
+\section{Remarks}\label{sec:remarks}
+
+\subsection*{Smallest order}
+No counterexample to Problem~\ref{prob} with $d=4$ has fewer than $9$ vertices, so $C_9^2$ has the smallest possible order.
+Indeed, let $G$ have at most $8$ vertices, maximum degree at most $4$ and no component $K_5$.
+Add isolated vertices until there are exactly $8$, and let $H$ be the complement.
+Every vertex of $H$ has degree at least $3$.
+We claim that $H$ has a perfect matching.
+Otherwise, by Tutte's theorem, there is a set $S$ of $s$ vertices such that $H-S$ has more than $s$ odd components; since $8$ is even, it has at least $s+2$.
+A vertex $v$ of a component $C$ of $H-S$ has all its neighbours in $(C\setminus\{v\})\cup S$, so $|C|\ge 4-s$.
+For $s=0,1,2$ the odd components have at least $5$, $3$, $3$ vertices, and $2\cdot5>8$, $3\cdot3>7$, $4\cdot3>6$.
+For $s\ge4$ there are fewer than $s+2$ vertices outside $S$.
+So $s=3$, and $H-S$ consists of $5$ isolated vertices.
+Each of them has all its at least $3$ neighbours in $S$, so it is adjacent in $H$ to all of $S$ and to none of the other four.
+In $G$ these $5$ vertices are therefore pairwise adjacent and have no other neighbours: they form a component $K_5$, which is excluded.
+So $H$ has a perfect matching $\{a_ib_i\}_{i=1}^4$.
+Put $f(a_i)=e_i/\sqrt2$ and $f(b_i)=-e_i/\sqrt2$, where $e_1,\dots,e_4$ is the standard basis.
+This map is injective, and two vertices in different pairs are mapped to orthogonal vectors.
+Every edge of $G$ joins two different pairs, since each pair is a non-edge of $G$.
+So $\dim_S G\le4$.
+This is the construction of \cite[Lemma~13]{FKS}.
+For every $d\ge4$, the analogous statement for graphs on at most $2d$ vertices is proved, with a Lean formalization, in \cite{Dishant}.
+
+\subsection*{The structure of the representations}
+In $200$ orthogonal representations of $C_9^2$ by unit vectors in $\R^4$, computed numerically from random starting points, exactly one residue class lay on a line each time; Theorem~\ref{thm:main} shows that at least one always does.
+The same search finds injective representations in $\R^4$ of all $16$ connected $4$-regular graphs on $9$ vertices except $C_9^2$, of all $59$ connected $4$-regular graphs on $10$ vertices, and of every connected circulant graph of degree $4$ on at most $18$ vertices except $C_9(1,2)$, $C_9(1,4)$ and $C_9(2,4)$, which are all isomorphic to $C_9^2$ (multiplication by $2$ and by $4$ modulo $9$).
+It also finds them for $C_9^2$ with one edge removed, for each of the two edge orbits of its automorphism group (the dihedral group of order $18$); so, numerically, $C_9^2$ is an edge-minimal counterexample.
+Every connected circulant graph of degree $5$ ($78$ graphs) or $6$ ($245$ graphs) on at most $18$ vertices has an injective representation in $\R^5$, respectively $\R^6$, by the same search.
+For $d\ge5$ Problem~\ref{prob} remains open.
+
+\subsection*{Formalization}
+Theorem~\ref{thm:main} and Corollary~\ref{cor} are formalized in Lean~4 with Mathlib.
+The formal statement \cite{FC} reads, in Lean's ASCII notation,
+{\small
+\begin{verbatim}
+theorem problem_1 :
+    answer(sorry) <->
+      forall d : Nat, 3 < d -> forall (n : Nat) (G : SimpleGraph (Fin n)),
+        G.maxDegree <= d -> Not (HasCompleteComponent d G) ->
+          HasSphericalDimAtMost d G
+\end{verbatim}
+}
+together with the variant for $d=4$.
+We prove both with \lean{answer(False)}, using the definitions \lean{HasSphericalDimAtMost} and \lean{HasCompleteComponent} of the statement file.
+The proofs depend only on the axioms \lean{propext}, \lean{Classical.choice} and \lean{Quot.sound}.
+The Lean files and a reproducible check script are in the repository accompanying this note.
+
+\begin{thebibliography}{9}
+
+\bibitem{FC}
+Google DeepMind, \emph{Formal Conjectures}, \url{https://github.com/google-deepmind/formal-conjectures}; the statements are in \texttt{FormalConjectures/Arxiv/1802.03092/EmbeddingGraphs.lean}, pull request 6681 (2026).
+
+\bibitem{Frankl}
+N.~Frankl, \emph{On some problems in combinatorial geometry}, PhD thesis, London School of Economics and Political Science, 2020.
+
+\bibitem{FKS}
+N.~Frankl, A.~Kupavskii and K.~J.~Swanepoel, \emph{Embedding graphs in Euclidean space}, J.~Combin. Theory Ser.~A \textbf{171} (2020), 105146; arXiv:1802.03092.
+
+\bibitem{Dishant}
+Dishant (GitHub user Dishah3241), \emph{FKSProblem1: a Lean proof of FKS Problem 1 for graphs on at most $2d$ vertices}, \url{https://github.com/Dishah3241/FKSProblem1}, 2026.
+
+\end{thebibliography}
+
+\end{document}

@@ -1,0 +1,9 @@
+n=9: 16 connected 4-regular classes found in 118 samples (known: 16)
+  no injective representation in R^4 found: edges [(0, 1), (0, 3), (0, 4), (0, 8), (1, 3), (1, 7), (1, 8), (2, 3), (2, 5), (2, 6), (2, 7), (3, 7), (4, 5), (4, 6), (4, 8), (5, 6), (5, 7), (6, 8)] (this is C_9^2) (best min distance 3.28e-08)
+n=9: 1 of 16 without an injective representation in R^4
+n=10: 59 connected 4-regular classes found in 10150 samples (known: 59)
+n=10: 0 of 59 without an injective representation in R^4
+C_9^2 minus an edge: injective representation in R^4 found = True (min distance 0.730)
+Q_4 in R^4: injective representation found = True (min distance 0.828)
+Q_5 in R^5: injective representation found = True (min distance 0.809)
+exit 0

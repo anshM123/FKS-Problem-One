@@ -1,0 +1,5 @@
+automorphisms of C_9^2: 18
+size of the orbit of the edge {0,1}: 9 of 18 edges
+C_9^2 minus edge (0, 1): injective representation in R^4 found = True (min distance 0.854)
+C_9^2 minus edge (0, 2): injective representation in R^4 found = True (min distance 0.808)
+exit 0
